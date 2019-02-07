@@ -37,7 +37,8 @@
   (let [status  (cuddlefish/status cf-config)
         current (:tag status)
         [_ prefix ver-str] (re-matches #"^(\D*)(.*)$" current)
-        version (v/parse ver-str)]
+        version (when (seq ver-str)
+                  (v/parse ver-str))]
     {:version version :git status :current current :prefix prefix}))
 
 (defn commit-message [{:keys [message incr-type]}]
